@@ -4,12 +4,17 @@ import { View, Text, Button, Icon, StyleSheet } from "react-native";
 import formatDuration from "format-duration";
 import humanizeDuration from "humanize-duration";
 
-const TimerControls = props => {
+const CountdownControls = props => {
   const label = props.running ? "Pause" : "Start";
-  return <Button title={label} onPress={props.handleClick} />;
+  return (
+    <View>
+      <Button title={label} onPress={props.handlePressStart} />
+      <Button title={"Restart"} onPress={props.handlePressRestart} />
+    </View>
+  );
 };
 
-export default class Timer extends Component {
+export default class Countdown extends Component {
   constructor(props) {
     // whats the point of this vs componentDidMount? does it happen before or something?
     super(props);
@@ -23,16 +28,24 @@ export default class Timer extends Component {
   render() {
     const { running, msRemaining } = this.state;
     return (
-      <View style={styles.timer}>
+      <View style={styles.countdown}>
         <Text>{formatDuration(msRemaining)}</Text>
         <Text>{humanizeDuration(msRemaining)}</Text>
-        <TimerControls running={running} handleClick={this._handleClick} />
+        <CountdownControls
+          running={running}
+          handlePressStart={this._handlePressStart}
+          handlePressRestart={this._handlePressRestart}
+        />
       </View>
     );
   }
 
-  _handleClick = e => {
+  _handlePressStart = e => {
     this.setState({ running: !this.state.running });
+  };
+
+  _handlePressRestart = e => {
+    this.setState({ msRemaining: this.props.msRemaining });
   };
 
   _tick = () => {
@@ -45,7 +58,7 @@ export default class Timer extends Component {
 }
 
 const styles = StyleSheet.create({
-  timer: {
+  countdown: {
     fontSize: 60
   }
 });

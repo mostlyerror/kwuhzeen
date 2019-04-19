@@ -11,7 +11,7 @@ import {
 import { WebBrowser } from "expo";
 
 import { MonoText } from "../components/StyledText";
-import Timer from "../components/Timer";
+import Countdown from "../components/Countdown";
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.myContainer}>
         <Text>KEEPIN TIME</Text>
-        <Timer msRemaining={300000} />
+        <Countdown msRemaining={300000} />
       </View>
     );
   }
